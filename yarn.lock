@@ -2821,9 +2821,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hono/supabash-auth@workspace:packages/supabash-auth":
+"@hono/supabase-auth@workspace:packages/supabase-auth":
   version: 0.0.0-use.local
-  resolution: "@hono/supabash-auth@workspace:packages/supabash-auth"
+  resolution: "@hono/supabase-auth@workspace:packages/supabase-auth"
   dependencies:
     "@supabase/supabase-js": "npm:^2.46.1"
     hono: "npm:^4.6.12"
