@@ -7,8 +7,8 @@ This middleware can be used to inject the active Supabase session into the reque
 ## Installation
 
 ```plain
-npm i hono @hono/supabash-auth
-pnpm add hono @hono/supabash-auth
+npm i hono @hono/supabase-auth
+pnpm add hono @hono/supabase-auth
 ```
 
 ## Configuration
@@ -102,7 +102,7 @@ export default function Home() {
 
 # Next.js example
 
-[hono-supabash-auth-example](https://github.com/ljh12138164/hono-supabash-auth-example)
+[hono-supabase-auth-example](https://github.com/ljh12138164/hono-supabash-auth-example)
 
 ## Author
 
