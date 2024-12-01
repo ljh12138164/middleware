@@ -1,4 +1,4 @@
-# Clerk middleware for Hono
+# Supabase middleware for Hono
 
 This is a [Supabase](https://supabase.com) third-party middleware for [Hono](https://github.com/honojs/hono).
 
@@ -99,6 +99,10 @@ export default function Home() {
   return <div>{JSON.stringify(data)}</div>
 }
 ```
+
+# Next.js example
+
+[hono-supabash-auth-example](https://github.com/ljh12138164/hono-supabash-auth-example)
 
 ## Author
 
