@@ -1,6 +1,6 @@
 {
   "name": "@hono/supabase-auth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A third-party Supabash auth middleware for Hono",
   "type": "module",
   "main": "dist/index.cjs",
