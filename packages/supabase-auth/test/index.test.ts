@@ -94,4 +94,36 @@ describe('supabashMiddleware()', () => {
       },
     })
   })
+
+  // handles add type of user_metadata in payload
+  test('getSupabaseAuth', async () => {
+    const header =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.qqsQYQ1p6_Ou4kpXyDf-VbYKTBhYooZUaU7Yj2EFnzA'
+    authenticateRequestMock.mockResolvedValueOnce({
+      headers: new Headers(),
+    })
+    const app = new Hono()
+    app.use('*', checkToken())
+    app.get('/', (ctx) => {
+      const auth = getSupabaseAuth(ctx)
+      return ctx.json({ auth })
+    })
+    const req = new Request('http://localhost/', {
+      headers: {
+        Authorization: `Bearer ${header}`,
+      },
+    })
+    const response = await app.request(req)
+    expect(response.status).toEqual(200)
+    expect(await response.json()).toEqual({
+      auth: {
+        auth: {
+          sub: '1234567890',
+          name: 'John Doe',
+          iat: 1516239022,
+        },
+        token: header,
+      },
+    })
+  })
 })

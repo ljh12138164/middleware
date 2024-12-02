@@ -1,18 +1,35 @@
 import { Context, MiddlewareHandler } from 'hono'
 import { env } from 'hono/adapter'
 import { verify } from 'hono/jwt'
-import { JWTPayload } from 'hono/utils/jwt/types'
 
+// add supabse jwt type infer
+interface SupabaseJWTPayload<T extends object = object> {
+  iss: string
+  sub: string
+  aud: string
+  exp: number
+  iat: number
+  user_metadata: { sub: string } & T
+  role: string
+  amr: [{ method: string; timestamp: number }]
+  session_id: string
+  is_anonymous: boolean
+  aal: string
+  email: string
+  phone: string
+}
 declare module 'hono' {
   interface ContextVariableMap {
-    supabaseAuth: JWTPayload
+    auth: SupabaseJWTPayload
   }
 }
 type SupabaseEnv = {
   SUPABASE_JWT_SECRET: string
 }
-export const getSupabaseAuth = (c: Context) => {
-  return c.get('supabaseAuth') as { auth: JWTPayload; token: string }
+
+export const getSupabaseAuth = <T extends object = object>(c: Context) => {
+  const payload = c.get('supabaseAuth') as { auth: SupabaseJWTPayload<T>; token: string }
+  return payload
 }
 
 export const checkToken = (supabase?: string): MiddlewareHandler => {
@@ -25,7 +42,7 @@ export const checkToken = (supabase?: string): MiddlewareHandler => {
     if (!jwt) return c.json({ message: 'token is invalid' }, 401)
 
     try {
-      const payload = await verify(jwt, secret)
+      const payload = (await verify(jwt, secret)) as unknown as SupabaseJWTPayload
       c.set('supabaseAuth', { auth: payload, token: jwt })
       await next()
     } catch (e) {
